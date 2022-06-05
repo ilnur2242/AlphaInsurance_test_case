@@ -1,3 +1,4 @@
+import imp
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from locators import CurrencyDataLocators
@@ -5,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 from rates import Rates
 from datetime import date
+from typing import List
 
 
 TIME_TO_SLEEP = 6
@@ -12,7 +14,7 @@ TIME_TO_SLEEP = 6
 
 class InvestingComParser(): # rename inv com parser
 
-	def __init__(self, browser:webdriver,timeout=10) -> None:
+	def __init__(self, browser,timeout=10) -> None:
 		self.__url = 'https://ru.investing.com/charts/forex-charts'
 		self.__browser = browser # Вытащить вебраузер в парамертры, чтоб юзер мог сам быбрать браузер; dependens injection
 		# можно ли перезаписать свойстро; public, private
@@ -45,11 +47,12 @@ class InvestingComParser(): # rename inv com parser
 
 
 	def get_rates(self):
-		result = [] # rename it
+		 # rename it
 		self.__switch_frames()
 		name_selectors =  self.__browser.find_elements(*CurrencyDataLocators.NAME)
 		price_selectors = self.__browser.find_elements(*CurrencyDataLocators.PRICE)
 		
+		result: List[Rates] = []
 		for name_selector,price_selector in zip(name_selectors,price_selectors):
 			currency_ratio = name_selector.text
 			price = float(price_selector.text)
