@@ -13,15 +13,3 @@ def main():
 
 main()
 
-
-
-""" con = sqlite3.connect(PATH_TO_DATABASE)
-
-cur = con.cursor()
-
-# The result of a "cursor.execute" can be iterated over by row
-for row in cur.execute('select * from rates where cur="RUB" and (date between "2022-06-03" and "2022-06-07") ORDER BY date;').fetchall():
-    print(row)
-
-# Be sure to close the connection
-con.close() """
