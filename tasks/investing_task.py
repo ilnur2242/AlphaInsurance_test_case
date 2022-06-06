@@ -12,13 +12,14 @@ class InvestingComWriter():
 	def write_investing_com(self):
 		conn = DataBaseConnector(self.__path_to_db).get_connection()
 		investingComParser = InvestingComParser(self.__browser, timeout=30)
-		normalizer = Normalizer(_result)
 		writer = Writer(conn)
 
 		_result = investingComParser.get_rates()
+		normalizer = Normalizer(_result)
 		normalized_result = normalizer.normalize()
 		for elem in normalized_result:
 			writer.write_new_row(elem)
+		conn.close()
 
 
 

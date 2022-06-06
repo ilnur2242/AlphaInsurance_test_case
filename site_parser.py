@@ -63,7 +63,8 @@ class InvestingComParser(): # rename inv com parser
 
 		return result
 
-
+	def __str__(self):
+		return 'InvestingComParser'
 
 	def __del__(self):
 		self.__browser.close()

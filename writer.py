@@ -10,9 +10,8 @@ class Writer():
 
 	
 	def write_new_row(self,rates: Rates):
-		self.__conn.execute(f'INSERT INTO rates VALUES ({rates.currency},{str(rates.value)},{rates.date.strftime("%Y-%m-%d")})')
+		cursor = self.__conn.cursor()
+		params = [rates.currency,str(rates.value),rates.date.strftime("%Y-%m-%d")]
+		cursor.execute('INSERT INTO rates("cur","value","date") VALUES (?,?,?)',params)
 		self.__conn.commit()
 
-
-	def __del__(self):
-		self.__conn.close()

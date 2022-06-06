@@ -23,6 +23,7 @@ class TaskPreparer(Task):
 					cr = CrossRates(rates1,rates2)
 					new_rates = cr.get_rates1_by_rates2()
 					result.append(new_rates)
+					break
 		return result
 
 
@@ -32,6 +33,11 @@ class TaskPreparer(Task):
 		if self._currency_expressed_value == 'USD':
 			rates_list = db_reader.get_rates(
 				self._currency, self._start_date, self._end_date)
+			return rates_list
+		elif self._currency == 'USD':
+			rates_list2 = db_reader.get_rates(
+				self._currency_expressed_value, self._start_date, self._end_date)
+			rates_list = [Rates('USD',self._currency_expressed_value,1/val,date) for val,date in zip([elem.value for elem in rates_list2],[elem.date for elem in rates_list2])]
 			return rates_list
 		else:
 			rates_list1 = db_reader.get_rates(
